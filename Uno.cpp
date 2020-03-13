@@ -1,4 +1,5 @@
 #include "Uno.h"
+#include "Scanner.h"
 
 #include <iostream>
 #include <stdlib.h>
@@ -27,22 +28,14 @@ void Uno::runPrompt( void){
 }
 
 
-void Uno::run( string program){
-    cout << program << "\n";
-}
-/*
-Uno::void run( string program){
-    Scanner scanner = new Scanner(program);
-    List<Token> tokens = scanner.scanTokens();
-
-    for (Token token : tokens){
+void Uno::run( std::string source){
+    Scanner scanner( source);
+    list<string> tokens = scanner.scanTokens();
+    for (string token : tokens){
         cout << token;
     }
-    if (has_error){
-        exit(65);
-    }
+    cout << "\n";
 }
-*/
 
 void Uno::error( int line, string mssg){
     cout << "[line " << line << " ] Error : " << mssg;

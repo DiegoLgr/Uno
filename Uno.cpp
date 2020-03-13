@@ -1,35 +1,23 @@
+#include "Uno.h"
+
 #include <iostream>
 #include <stdlib.h>
 #include <string>
 #include <fstream>
 #include <streambuf>
-
-
 using namespace std;
 
-void runFile( string path);
-void runPrompt( void);
-void run( string program);
+Uno::Uno ( void){
+    has_error = false;
+};
 
-
-int main( int argc, char *argv[]){
-    if (argc > 2){
-        cout << "Usage: uno [script]\n";
-        exit (EXIT_FAILURE);
-    }else if (argc == 2){
-       runFile( argv[1]);
-    }else{
-        runPrompt();
-    }
-}
-
-void runFile( string path){
+void Uno::runFile( string path){
     ifstream file( path);
     string program((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
     run( program);
 }
 
-void runPrompt( void){
+void Uno::runPrompt( void){
     string line;
     while( true){
         cout << "Uno ~> ";
@@ -38,6 +26,25 @@ void runPrompt( void){
     }
 }
 
-void run( string program){
-    cout << program <<"\n";
+
+void Uno::run( string program){
+    cout << program << "\n";
+}
+/*
+Uno::void run( string program){
+    Scanner scanner = new Scanner(program);
+    List<Token> tokens = scanner.scanTokens();
+
+    for (Token token : tokens){
+        cout << token;
+    }
+    if (has_error){
+        exit(65);
+    }
+}
+*/
+
+void Uno::error( int line, string mssg){
+    cout << "[line " << line << " ] Error : " << mssg;
+    has_error = true;
 }

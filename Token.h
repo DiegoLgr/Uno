@@ -23,7 +23,7 @@ typedef enum TokenType {
 
 class Token{
     public:
-        Token( int t, std::string lex, int lin); 
+        Token( int t, std::string lex, int lin);
         std::string toString( void);
     private:
         int type;
@@ -31,12 +31,3 @@ class Token{
         int line;
 };
 
-Token::Token( int t, std::string lex, int lin){
-   type = t;
-   lexeme = lex;
-   line = lin;
-}
-
-std::string Token::toString() {
-    return std::to_string( type) + " " + lexeme;
-}

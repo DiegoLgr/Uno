@@ -31,7 +31,7 @@ void Uno::run( std::string source){
     Scanner scanner( source);
     list<Token> tokens = scanner.scanTokens();
     for (Token token : tokens){
-        cout << token.toString();
+        cout << token.toString() << "\n";
     }
     cout << "\n";
 }

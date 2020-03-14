@@ -11,7 +11,7 @@ Scanner::Scanner( std::string src){
     source = src;
 };
 
-std::list<std::string> Scanner::scanTokens( void){
-    std::list<std::string> li = {source};
+std::list<Token> Scanner::scanTokens( void){
+    std::list<Token> li {Token {ELSE, "else", 1}};
     return li;
 }

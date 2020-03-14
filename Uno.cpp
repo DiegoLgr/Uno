@@ -1,6 +1,5 @@
 #include "Uno.h"
 #include "Scanner.h"
-
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -30,9 +29,9 @@ void Uno::runPrompt( void){
 
 void Uno::run( std::string source){
     Scanner scanner( source);
-    list<string> tokens = scanner.scanTokens();
-    for (string token : tokens){
-        cout << token;
+    list<Token> tokens = scanner.scanTokens();
+    for (Token token : tokens){
+        cout << token.toString();
     }
     cout << "\n";
 }

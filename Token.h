@@ -18,13 +18,14 @@ typedef enum TokenType {
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
-    EOFI
+    COMMENT, EOFF, ERROR
 }TokenType;
 
 class Token{
     public:
         Token( int t, std::string lex, int lin);
         std::string toString( void);
+        int getType( void);
     private:
         int type;
         std::string lexeme;

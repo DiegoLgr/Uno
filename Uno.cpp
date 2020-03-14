@@ -29,7 +29,9 @@ void Uno::runPrompt( void){
 
 void Uno::run( std::string source){
     Scanner scanner( source);
-    list<Token> tokens = scanner.scanTokens();
+    scanner.scanTokens();
+    list<Token> tokens = scanner.getTokens();
+
     for (Token token : tokens){
         cout << token.toString() << "\n";
     }

@@ -18,7 +18,7 @@ typedef enum TokenType {
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
-    COMMENT, EOFF, ERROR
+    COMMENT, WHITE, EOFF, ERROR
 }TokenType;
 
 class Token{

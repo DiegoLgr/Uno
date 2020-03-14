@@ -42,22 +42,22 @@ void Scanner::scanTokens( void){
     while (!(current >= source.end())){
         start = current;
         Token t = nextToken();
-        if (t.getType() != COMMENT){
+        if (t.getType() != COMMENT && t.getType() != WHITE){
             tokens.push_back( t);
         }
     }
-    tokens.push_back( Token {EOFF, "", line});
+    tokens.push_back( Token {EOFF, "end", line});
 }
 
 Token Scanner::nextToken( void){
     char c = *current++;
-    int token_id = 0;
+    int token_id = -1;
     switch (c){
         //Whitespace.
-        case '\n': line++; break;
+        case '\n': line++;
         case ' ':
         case '\r':
-        case '\t': break;
+        case '\t': token_id = WHITE; break;
         //Operators
         case '(': token_id = LEFT_PAREN; break;
         case ')': token_id = RIGHT_PAREN; break;

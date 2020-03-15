@@ -7,9 +7,9 @@ Build/main.o: src/main.cpp
 Build/Uno.o: src/Uno.cpp
 	clang++ -c src/Uno.cpp -o Build/Uno.o
 
-Build/Scanner.o: src/Scanner.cpp
-	clang++ -c src/Scanner.cpp -o Build/Scanner.o
+Build/Scanner.o: src/Parser/Scanner.cpp
+	clang++ -c src/Parser/Scanner.cpp -o Build/Scanner.o
 
-Build/Token.o: src/Token.cpp
-	clang++ -c src/Token.cpp -o Build/Token.o
+Build/Token.o: src/Parser/Token.cpp
+	clang++ -c src/Parser/Token.cpp -o Build/Token.o
 

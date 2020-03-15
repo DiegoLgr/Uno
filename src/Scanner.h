@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 #include "Token.h"
 
 #include <list>
@@ -32,3 +35,4 @@ class Scanner{
         int scanNumber( void);
         int scanWord( void);
 };
+#endif

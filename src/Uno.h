@@ -1,3 +1,6 @@
+#ifndef UNO_H
+#define UNO_H
+
 #include <stdio.h>
 #include <iostream>
 class Uno {
@@ -11,4 +14,5 @@ class Uno {
         void error( int line, std::string mssg);
         bool has_error;
 };
+#endif
 

@@ -1,4 +1,7 @@
 <map id="Token::getType" name="Token::getType">
-<area shape="rect" id="node2" href="$classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="172,5,329,32"/>
-<area shape="rect" id="node3" href="$classUno.html#aa690e5403bb1d8a9d3af81b4fa664e1c" title="Uno::runPrompt" alt="" coords="377,5,501,32"/>
+<area shape="rect" id="node2" href="$classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="172,31,329,57"/>
+<area shape="rect" id="node3" href="$classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="377,31,455,57"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9" title="runFromFile" alt="" coords="503,5,600,32"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb" title="runRPL" alt="" coords="518,56,585,83"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="648,31,703,57"/>
 </map>

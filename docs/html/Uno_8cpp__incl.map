@@ -1,5 +1,5 @@
 <map id="src/Uno.cpp" name="src/Uno.cpp">
-<area shape="rect" id="node2" href="$Uno_8h.html" title="Uno.h" alt="" coords="106,80,166,107"/>
-<area shape="rect" id="node5" href="$Scanner_8h.html" title="Scanner.h" alt="" coords="325,80,411,107"/>
+<area shape="rect" id="node2" href="$Uno_8h.html" title="Interpreter implementation. " alt="" coords="71,80,131,107"/>
+<area shape="rect" id="node5" href="$Scanner_8h.html" title="Parser/Scanner.h" alt="" coords="245,80,374,107"/>
 <area shape="rect" id="node6" href="$Token_8h.html" title="Token.h" alt="" coords="200,155,272,181"/>
 </map>

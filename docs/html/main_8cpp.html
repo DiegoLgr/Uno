@@ -70,16 +70,18 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>uno language interpreter.  uno [path_to_scritp] if a path is given, it's code is run. if uno is called without arguments, an interactive RPL is launched.  
+<p>Entry point for uno cli.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="Uno_8h_source.html">Uno.h</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;streambuf&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for main.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#src_2main_8cpp" alt=""/></div>
 <map name="src_2main_8cpp" id="src_2main_8cpp">
-<area shape="rect" id="node2" href="Uno_8h.html" title="Uno.h" alt="" coords="38,80,98,107"/>
+<area shape="rect" id="node2" href="Uno_8h.html" title="Interpreter implementation. " alt="" coords="38,80,98,107"/>
 </map>
 </div>
 </div>
@@ -87,14 +89,48 @@ Include dependency graph for main.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a7f3d783feb18e0b37269ff0ba38d86c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7f3d783feb18e0b37269ff0ba38d86c7">informError</a> (void)</td></tr>
+<tr class="separator:a7f3d783feb18e0b37269ff0ba38d86c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af843ef34594acc2b77d3d713715c2bc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9">runFromFile</a> (std::string file_path)</td></tr>
+<tr class="separator:af843ef34594acc2b77d3d713715c2bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cae79983f19eb51c563bcb5dcfa9bdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb">runRPL</a> (void)</td></tr>
+<tr class="separator:a2cae79983f19eb51c563bcb5dcfa9bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>uno language interpreter.  uno [path_to_scritp] if a path is given, it's code is run. if uno is called without arguments, an interactive RPL is launched. </p>
+<div class="textblock"><p>Entry point for uno cli. </p>
 
 <p class="definition">Definition in file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a7f3d783feb18e0b37269ff0ba38d86c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f3d783feb18e0b37269ff0ba38d86c7">&#9670;&nbsp;</a></span>informError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void informError </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00034">34</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_a7f3d783feb18e0b37269ff0ba38d86c7_icgraph.png" border="0" usemap="#main_8cpp_a7f3d783feb18e0b37269ff0ba38d86c7_icgraph" alt=""/></div>
+<map name="main_8cpp_a7f3d783feb18e0b37269ff0ba38d86c7_icgraph" id="main_8cpp_a7f3d783feb18e0b37269ff0ba38d86c7_icgraph">
+<area shape="rect" id="node2" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="149,5,204,32"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&nbsp;</a></span>main()</h2>
 
@@ -121,7 +157,99 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00014">14</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00024">24</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#main_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
+<map name="main_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="main_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
+<area shape="rect" id="node2" href="main_8cpp.html#a7f3d783feb18e0b37269ff0ba38d86c7" title="informError" alt="" coords="109,5,205,32"/>
+<area shape="rect" id="node3" href="main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9" title="runFromFile" alt="" coords="108,56,205,83"/>
+<area shape="rect" id="node8" href="main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb" title="runRPL" alt="" coords="123,107,190,133"/>
+<area shape="rect" id="node4" href="classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="253,81,331,108"/>
+<area shape="rect" id="node5" href="classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="379,56,536,83"/>
+<area shape="rect" id="node7" href="classScanner.html#aefda786435557ddefd93791e890adfe6" title="Scanner::getTokens" alt="" coords="383,107,531,133"/>
+<area shape="rect" id="node6" href="classToken.html#a7ca73dbe9c27e2663f846293aeaff59c" title="Token::getType" alt="" coords="584,56,703,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af843ef34594acc2b77d3d713715c2bc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af843ef34594acc2b77d3d713715c2bc9">&#9670;&nbsp;</a></span>runFromFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runFromFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file_path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00039">39</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_cgraph.png" border="0" usemap="#main_8cpp_af843ef34594acc2b77d3d713715c2bc9_cgraph" alt=""/></div>
+<map name="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_cgraph" id="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_cgraph">
+<area shape="rect" id="node2" href="classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="151,31,228,57"/>
+<area shape="rect" id="node3" href="classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="276,5,433,32"/>
+<area shape="rect" id="node5" href="classScanner.html#aefda786435557ddefd93791e890adfe6" title="Scanner::getTokens" alt="" coords="281,56,429,83"/>
+<area shape="rect" id="node4" href="classToken.html#a7ca73dbe9c27e2663f846293aeaff59c" title="Token::getType" alt="" coords="481,5,600,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_icgraph.png" border="0" usemap="#main_8cpp_af843ef34594acc2b77d3d713715c2bc9_icgraph" alt=""/></div>
+<map name="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_icgraph" id="main_8cpp_af843ef34594acc2b77d3d713715c2bc9_icgraph">
+<area shape="rect" id="node2" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="151,5,205,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2cae79983f19eb51c563bcb5dcfa9bdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cae79983f19eb51c563bcb5dcfa9bdb">&#9670;&nbsp;</a></span>runRPL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runRPL </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00047">47</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_cgraph.png" border="0" usemap="#main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_cgraph" alt=""/></div>
+<map name="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_cgraph" id="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_cgraph">
+<area shape="rect" id="node2" href="classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="120,31,197,57"/>
+<area shape="rect" id="node3" href="classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="245,5,403,32"/>
+<area shape="rect" id="node5" href="classScanner.html#aefda786435557ddefd93791e890adfe6" title="Scanner::getTokens" alt="" coords="250,56,398,83"/>
+<area shape="rect" id="node4" href="classToken.html#a7ca73dbe9c27e2663f846293aeaff59c" title="Token::getType" alt="" coords="451,5,569,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_icgraph.png" border="0" usemap="#main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_icgraph" alt=""/></div>
+<map name="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_icgraph" id="main_8cpp_a2cae79983f19eb51c563bcb5dcfa9bdb_icgraph">
+<area shape="rect" id="node2" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="120,5,175,32"/>
+</map>
+</div>
 
 </div>
 </div>

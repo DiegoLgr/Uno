@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]]
+  ['informerror',['informError',['../main_8cpp.html#a7f3d783feb18e0b37269ff0ba38d86c7',1,'main.cpp']]]
 ];

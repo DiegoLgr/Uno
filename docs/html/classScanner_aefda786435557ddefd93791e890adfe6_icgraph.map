@@ -1,3 +1,6 @@
 <map id="Scanner::getTokens" name="Scanner::getTokens">
-<area shape="rect" id="node2" href="$classUno.html#aa690e5403bb1d8a9d3af81b4fa664e1c" title="Uno::runPrompt" alt="" coords="201,5,325,32"/>
+<area shape="rect" id="node2" href="$classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="201,31,279,57"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9" title="runFromFile" alt="" coords="327,5,424,32"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb" title="runRPL" alt="" coords="342,56,409,83"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="472,31,527,57"/>
 </map>

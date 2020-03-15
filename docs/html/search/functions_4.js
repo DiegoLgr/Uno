@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['token',['Token',['../classToken.html#a05effe0dad273695350ae4dd90eec4fc',1,'Token']]],
-  ['tostring',['toString',['../classToken.html#ac5f72b7408cc16946d166963cf1f288d',1,'Token']]]
+  ['scanner',['Scanner',['../classScanner.html#a149fab95f2549cf7d8405c79190c9903',1,'Scanner']]],
+  ['scantokens',['scanTokens',['../classScanner.html#a38e0f484bb3539944d6809c552f1da0b',1,'Scanner']]]
 ];

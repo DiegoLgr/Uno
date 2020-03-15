@@ -1,4 +1,4 @@
 <map id="src/Uno.h" name="src/Uno.h">
-<area shape="rect" id="node2" href="$main_8cpp.html" title="uno language interpreter. &#160;uno [path_to_scritp] if a path is given, it&#39;s code is run. if uno is called without arguments, an interactive RPL is launched. " alt="" coords="5,80,111,107"/>
+<area shape="rect" id="node2" href="$main_8cpp.html" title="Entry point for uno cli. " alt="" coords="5,80,111,107"/>
 <area shape="rect" id="node3" href="$Uno_8cpp.html" title="src/Uno.cpp" alt="" coords="135,80,234,107"/>
 </map>

@@ -80,7 +80,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Scanner_8h_source.html#l00007">7</a> of file <a class="el" href="Scanner_8h_source.html">Scanner.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Scanner_8h_source.html#l00010">10</a> of file <a class="el" href="Scanner_8h_source.html">Scanner.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a149fab95f2549cf7d8405c79190c9903"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a149fab95f2549cf7d8405c79190c9903">&#9670;&nbsp;</a></span>Scanner()</h2>
@@ -105,8 +105,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Turns a string of source code into a list of tokens.</p>
+<p>To scann a source code You must initialize the scanner by caling its constructor with a string containing the raw source and call scanTokens To get the list of tokens use getTokens. </p>
 
-<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00010">10</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00023">23</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
 
 </div>
 </div>
@@ -126,14 +128,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The complete list of tokens corresponding to the source string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00034">34</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00047">47</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classScanner_aefda786435557ddefd93791e890adfe6_icgraph.png" border="0" usemap="#classScanner_aefda786435557ddefd93791e890adfe6_icgraph" alt=""/></div>
 <map name="classScanner_aefda786435557ddefd93791e890adfe6_icgraph" id="classScanner_aefda786435557ddefd93791e890adfe6_icgraph">
-<area shape="rect" id="node2" href="classUno.html#aa690e5403bb1d8a9d3af81b4fa664e1c" title="Uno::runPrompt" alt="" coords="201,5,325,32"/>
+<area shape="rect" id="node2" href="classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="201,31,279,57"/>
+<area shape="rect" id="node3" href="main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9" title="runFromFile" alt="" coords="327,5,424,32"/>
+<area shape="rect" id="node5" href="main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb" title="runRPL" alt="" coords="342,56,409,83"/>
+<area shape="rect" id="node4" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="472,31,527,57"/>
 </map>
 </div>
 
@@ -154,8 +160,9 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Creates a the complete list of tokens corresponding to the source string. </p>
 
-<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00038">38</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Scanner_8cpp_source.html#l00051">51</a> of file <a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -169,15 +176,18 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classScanner_a38e0f484bb3539944d6809c552f1da0b_icgraph.png" border="0" usemap="#classScanner_a38e0f484bb3539944d6809c552f1da0b_icgraph" alt=""/></div>
 <map name="classScanner_a38e0f484bb3539944d6809c552f1da0b_icgraph" id="classScanner_a38e0f484bb3539944d6809c552f1da0b_icgraph">
-<area shape="rect" id="node2" href="classUno.html#aa690e5403bb1d8a9d3af81b4fa664e1c" title="Uno::runPrompt" alt="" coords="211,5,335,32"/>
+<area shape="rect" id="node2" href="classUno.html#ab370732a9933d16f350b37b9f0dfa3b0" title="Uno::run" alt="" coords="211,31,288,57"/>
+<area shape="rect" id="node3" href="main_8cpp.html#af843ef34594acc2b77d3d713715c2bc9" title="runFromFile" alt="" coords="336,5,433,32"/>
+<area shape="rect" id="node5" href="main_8cpp.html#a2cae79983f19eb51c563bcb5dcfa9bdb" title="runRPL" alt="" coords="351,56,418,83"/>
+<area shape="rect" id="node4" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="481,31,536,57"/>
 </map>
 </div>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="Scanner_8h_source.html">Scanner.h</a></li>
-<li>src/<a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a></li>
+<li>src/Parser/<a class="el" href="Scanner_8h_source.html">Scanner.h</a></li>
+<li>src/Parser/<a class="el" href="Scanner_8cpp_source.html">Scanner.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

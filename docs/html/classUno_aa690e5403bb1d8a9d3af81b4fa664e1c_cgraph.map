@@ -1,0 +1,5 @@
+<map id="Uno::runPrompt" name="Uno::runPrompt">
+<area shape="rect" id="node2" href="$classScanner.html#a38e0f484bb3539944d6809c552f1da0b" title="Scanner::scanTokens" alt="" coords="177,5,335,32"/>
+<area shape="rect" id="node4" href="$classScanner.html#aefda786435557ddefd93791e890adfe6" title="Scanner::getTokens" alt="" coords="182,56,330,83"/>
+<area shape="rect" id="node3" href="$classToken.html#a7ca73dbe9c27e2663f846293aeaff59c" title="Token::getType" alt="" coords="383,5,501,32"/>
+</map>

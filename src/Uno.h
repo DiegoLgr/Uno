@@ -1,3 +1,8 @@
+/**
+ * @file Uno.h
+ *
+ * @brief Interpreter implementation.
+ */
 #ifndef UNO_H
 #define UNO_H
 
@@ -6,13 +11,12 @@
 class Uno {
     public:
         Uno( void);
-        void runFile( std::string path);
-        void runPrompt( void);
+        void run( std::string program);
 
     private:
-        void run( std::string program);
-        void error( int line, std::string mssg);
         bool has_error;
+
+        void error( int line, std::string mssg);
 };
 #endif
 

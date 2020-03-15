@@ -1,4 +1,9 @@
-
+/**
+ * @file Scanner.cpp
+ *
+ * @brief Scanner class.
+ *
+ */
 #include "Scanner.h"
 
 #include <iostream>
@@ -7,6 +12,7 @@
 #include <fstream>
 #include <streambuf>
 #include <list>
+#include <cassert>
 
 Scanner::Scanner( std::string src){
     source = src;
@@ -51,13 +57,17 @@ void Scanner::scanTokens( void){
 }
 
 Token Scanner::nextToken( void){
-    char c = *current++;
+    /**
+     * Makes tokens by scanning through individual characters from the source string
+     * until has read a full lexeme.
+     */
     int token_id = -1;
+    char c = *current++;
     switch (c){
         //Whitespace.
-        case '\n': line++;
-        case ' ':
-        case '\r':
+        case '\n': line++; //Fallthrough.
+        case ' ': //Fallthrough.
+        case '\r': //Fallthrough.
         case '\t': token_id = WHITE; break;
         //Operators
         case '(': token_id = LEFT_PAREN; break;
@@ -77,7 +87,7 @@ Token Scanner::nextToken( void){
         case '/': token_id = followedBy('/') ? scanComment() : SLASH; break;
         case '"': token_id = scanComment(); break;
         default:
-            if (c >= '0' && c <= '9') token_id = scanNumber();
+            if (isdigit( c)) token_id = scanNumber();
             else if (isalpha( c) || c == '_') token_id = scanWord();
             else token_id = ERROR; error = true;
     }
@@ -95,23 +105,36 @@ bool Scanner::followedBy( char c){
 }
 
 int Scanner::scanComment( void){
-    while (*current++ != '\n');
+    while (*current++ != '\n') continue;
     return COMMENT;
 };
 
 int Scanner::scanNumber( void){
-    while (isdigit( *current++))
+    /**
+     * Scans a succesion of digits whit at most a '.' among them.
+     * A number always starts with a digit.
+     * 0.980 -> right
+     * .980 -> wrong
+     */
+    assert( isdigit( *(current-1)));
+    while (isdigit( *current++)) continue;
     if (*current++ == '.' && isdigit( *current++)){
-        while (isdigit( *current++));
+        while (isdigit( *current++)) continue;
     }else {
         --current;
-        --current; //If '.' is not followed by a number, go back to it.
+        --current; //Reset current to '.' if it is not followed by a number.
     }
     return NUMBER;
 };
 
 int Scanner::scanWord( void){
-    while (isalpha( *current++));
+    /**
+     * Scans throught an uninterrupted succesion of letters and returns it's
+     * token type.
+     */
+    assert( isalpha( *(current-1)));
+
+    while (isalpha( *current++)) continue;
     std::map<std::string,int>::iterator it = keywords.find( std::string( start, current));
     if (it != keywords.end()){
         return it->second;

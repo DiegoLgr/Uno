@@ -1,7 +1,13 @@
 /**
  * @file Scanner.cpp
  *
- * @brief Scanner class.
+ * Scanner class.
+ *
+ * Recurrent special terminology used in this file:
+ *      source: Alwais refers to the source code.
+ *      scann:	It is used to mean that we advance in the source string and
+ *		    process the value read. IMPORTANT: The iterator advances!!
+ *      keyword: Every reserved word in uno.
  *
  */
 #include "Scanner.h"
@@ -43,9 +49,6 @@ std::list<Token> Scanner::getTokens( void){
 }
 
 void Scanner::scanTokens( void){
-    /*
-     * Creates a list of tokens from the scanner's source string.
-     */
     while (!(current >= source.end())){
         start = current;
         Token t = nextToken();
@@ -57,10 +60,6 @@ void Scanner::scanTokens( void){
 }
 
 Token Scanner::nextToken( void){
-    /**
-     * Makes tokens by scanning through individual characters from the source string
-     * until has read a full lexeme.
-     */
     int token_id = -1;
     char c = *current++;
     switch (c){
@@ -110,13 +109,14 @@ int Scanner::scanComment( void){
 };
 
 int Scanner::scanNumber( void){
-    /**
-     * Scans a succesion of digits whit at most a '.' among them.
+    /*
+     * Real numbers and integer are treated in the same way.
      * A number always starts with a digit.
      * 0.980 -> right
      * .980 -> wrong
      */
-    assert( isdigit( *(current-1)));
+    assert( isdigit( *(current-1))); //The first digit has already been consumed
+
     while (isdigit( *current++)) continue;
     if (*current++ == '.' && isdigit( *current++)){
         while (isdigit( *current++)) continue;
@@ -128,14 +128,9 @@ int Scanner::scanNumber( void){
 };
 
 int Scanner::scanWord( void){
-    /**
-     * Scans throught an uninterrupted succesion of letters and returns it's
-     * token type.
-     */
-    assert( isalpha( *(current-1)));
-
     while (isalpha( *current++)) continue;
-    std::map<std::string,int>::iterator it = keywords.find( std::string( start, current));
+    std::map<std::string,int>::iterator it;
+    it = keywords.find( std::string( start, current));
     if (it != keywords.end()){
         return it->second;
     }else {

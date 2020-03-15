@@ -1,6 +1,0 @@
- * Terminology used:
- *      lexeme: a secuence of character representing something.
- *      token: 
- *      scann:
- *      keyword:
- *      source:

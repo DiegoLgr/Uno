@@ -118,3 +118,40 @@ int main ( void){
 
     return 0;
 }
+
+
+
+
+/*
+ * VISITOR PATTERN:
+
+    * Printer want's to be able to print expresions, but he doesn't know how
+    * to print a generic expresion and expresions dont even know there is such
+    * a thig as 'printing'. So Prety Printer has a problem...
+
+    * So he decides to ask gently to the expresionto accept to be visited.
+    void Visitor::visit( Expr e){
+        e.accept( this);
+    }
+
+    * The expresion, who is already expecting visitors sends a mssg to
+    * PretyPrinter saying: sure, visit me so you can see how I am.
+    void Expr::accept( Visitor v){
+        v.visit( this); //Now visit is called with the actual type of the expresion
+    }
+
+    * So Prety Printer visites the expresion and realizes it is a number, so he
+    * prints it haply, beacause he know hot to print numbers. :)
+    void Visitor visit( Number n){
+        std::cout << n.value << " ";
+    }
+
+    * This pattern help us to implement any functionality for a hierarchy of
+    * classes by inheriting from an acceptor base class. Note that it is only usefull
+    * if we spect the function to be called with a base class as a parametter,
+    * if this is not the case, the problem is solved using simple overload.
+    * In this case the problem is we know some expresion have subexpresion, but
+    * don't know which kind, specialy, we don't know which members it has or
+    * how many. By implementing the visitor why can delay the acces to its
+    * members until having visited it and thus knowing its type.
+*/

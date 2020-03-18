@@ -13,19 +13,19 @@ typedef struct Number Number;
 
 
 struct Visitor {
-    virtual void visit( const Expr &e) const = 0;
-    virtual void visit( const Add &e) const = 0;
-    virtual void visit( const Mult &e) const = 0;
-    virtual void visit( const Number &e) const = 0;
+    virtual void visit( const Expr &e) = 0;
+    virtual void visit( const Add &e) = 0;
+    virtual void visit( const Mult &e) = 0;
+    virtual void visit( const Number &e) = 0;
 };
 
 struct Expr {
-    virtual void accept( const Visitor &v) const = 0;
+    virtual void accept(  Visitor &v) const = 0;
 };
 
 struct Add: public Expr {
     Add( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
-    void accept( const Visitor &v) const { v.visit( *this); }
+    void accept( Visitor &v) const { v.visit( *this); }
 
     const Expr& e1;
     const Expr& e2;
@@ -33,7 +33,7 @@ struct Add: public Expr {
 
 struct Mult: public Expr {
     Mult( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
-    void accept( const Visitor &v) const { v.visit( *this); }
+    void accept( Visitor &v) const { v.visit( *this); }
 
     const Expr& e1;
     const Expr& e2;
@@ -41,7 +41,7 @@ struct Mult: public Expr {
 
 struct Number: public Expr {
     Number( const float v): v(v){}
-    void accept( const Visitor &v) const { v.visit( *this); }
+    void accept( Visitor &v) const { v.visit( *this); }
 
     const float v;
 };

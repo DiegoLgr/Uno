@@ -23,7 +23,7 @@ struct Expr {
     virtual void accept( const Visitor &v) const = 0;
 };
 
-struct Add: Expr {
+struct Add: public Expr {
     Add( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
     void accept( const Visitor &v) const { v.visit( *this); }
 
@@ -31,7 +31,7 @@ struct Add: Expr {
     const Expr& e2;
 };
 
-struct Mult: Expr {
+struct Mult: public Expr {
     Mult( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
     void accept( const Visitor &v) const { v.visit( *this); }
 
@@ -39,7 +39,7 @@ struct Mult: Expr {
     const Expr& e2;
 };
 
-struct Number: Expr {
+struct Number: public Expr {
     Number( const float v): v(v){}
     void accept( const Visitor &v) const { v.visit( *this); }
 

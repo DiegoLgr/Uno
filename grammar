@@ -1,0 +1,84 @@
+Basic grammar for the uno language:
+
+To build a tree representing an expresion you first have to find the lower
+precedence operator and then make a tree for each of its operand.
+For binary operators that means to build an expresion with the part
+of the string to the left of the operator and anothed expresion with the one on
+the right. This goes on recursively until there are no more subexpresions.
+Expresions always are intoduced between parenthesis so the precedence is
+maintained.
+
+Eg:
+  3 + 4 > 5 != 1 + 1 > 2 which shoul evaluate to: (((3+4)>5)!=(1>2))
+  Would be parsed:
+    0) (expr)
+    1) ((expr) != (expr))
+    2) (((expr) > (expr)) != ((expr) > (expr)))
+    3) ((((expr) + (expr)) > (5)) != ((1) > (2)))
+    4) ((((3) + (4)) > (5) != ((1) > (2))))
+    (This is called a derivation)
+
+  Which visualized as a tree is: (And in deed this is the AST for this expresion)
+
+                                   (expr)
+                               (expr != expr)
+                  (expr > expr)              (expr > expr)
+     (expr + expr)             (5)        (1)             (2)
+  (3)             (4)
+	                             ||
+
+                       ((3 + 4) > 5) != (1 > 2))
+
+As we want to embedd precedence in oure grammar, we are not going to allow
+for an expresion to generate a nonterminal with lower precedence than itself.
+So our grammar is redefied in the following way:
+
+[nonterminal          : opt 1 | opt2 | ... | opt n;]
+
+expression     : equality;
+equality       : equality ( "!=" | "==" ) comparison | comparison;
+comparison     : addition ( ">" | ">=" | "<" | "<=" ) adition | adittion;
+addition       : addition ( "-" | "+" ) multiplication | multiplication;
+multiplication : multiplication ( "/" | "*" ) unary | unary;
+unary          : ( "!" | "-" ) unary | primary ;
+primary        : NUMBER | STRING | "false" | "true" | "nil" | "("expression")";
+
+As before, we first find the lowest precedence operator in our substring, once
+we have it, we pick the first rule we can fulfill. (We cant pick a rull for the
+one we lack one of its parts, for example, going from unary we cant pick
+"!"unary if we dont have a "!" as our current lest precedence operator)
+If we have more than one simbol to pick from with the same precedence, we choose
+the left one if its right asociative and the right one otherwise.
+
+Now the derivation for ((3 + 4) > 5) != (1 > 2)) goes:
+
+    0) (expr)
+    1) (equality)
+    2) ((equality) != (comparison))
+    3) ((comparison) != ((adition) > (adition))
+    4) (((addition) > (addition)) != ((mult) > (mult)))
+    5) ((((mult) + (mult)) > (mult)) != ((unary) > (unary)))
+    6) ((((unary) + (unary)) > (unary)) != ((primary) > (primary)))
+    7) ((((primary) + (primary)) > (primary)) != ((1) > (2)))
+    8) ((((3) + (4)) > (5)) != ((1) > (2)))
+       (                                  ) Removing uneccesary parenthesis
+            (             )  (     )
+               (3 + 4) > 5 != 1 > 2
+
+Another example:
+  4 * 3 - 5 - 8 -> (4*3 - 5) - 8
+
+  0) (expr)
+  1) (add)
+  2) (((add)) - (mult))
+  3) (((add) - (mult)) - (unary))
+  4) (((mult) - (unary)) - (primary))
+  5) ((((mult) * (unary))- (primary)) - (8))
+  6) ((((((unary) * (primary)- (5)) - (8))
+  7) ((((primary) * (3))- (5)) - (8))
+  8) ((((4) * (3))- (5)) - (8))
+     (                        ) Removing uneccesary parenthesis
+      (                ) -  8
+       ( 4  *  3) -  5 ) -  8
+            (4*3 - 5) - 8
+

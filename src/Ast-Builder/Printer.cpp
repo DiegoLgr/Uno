@@ -4,17 +4,17 @@
 
 
 struct Printer: Visitor {
-    void visit( Expr &e){ e.accept( *this); }
+    void visit( const Expr &e) const{ e.accept( *this); }
 
-    void visit( Number &n){ std::cout << n.v; }
+    void visit( const Number &n) const { std::cout << n.v; }
 
-    void visit( Add &a){
+    void visit( const Add &a) const {
         visit( a.e1);
         std::cout << " + ";
         visit( a.e2);
     }
 
-    void visit( Mult &m){
+    void visit( const Mult &m) const {
         visit( m.e1);
         std::cout << " * ";
         visit( m.e2);

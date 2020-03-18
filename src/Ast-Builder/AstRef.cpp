@@ -24,25 +24,25 @@ struct Expr {
 };
 
 struct Add: Expr {
-    Add( Expr &e1, Expr &e2): e1(e1), e2(e2){}
+    Add( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
     void accept( const Visitor &v) const { v.visit( *this); }
 
-    Expr& e1;
-    Expr& e2;
+    const Expr& e1;
+    const Expr& e2;
 };
 
 struct Mult: Expr {
-    Mult( Expr &e1, Expr &e2): e1(e1), e2(e2){}
+    Mult( const Expr &e1, const Expr &e2): e1(e1), e2(e2){}
     void accept( const Visitor &v) const { v.visit( *this); }
 
-    Expr& e1;
-    Expr& e2;
+    const Expr& e1;
+    const Expr& e2;
 };
 
 struct Number: Expr {
-    Number( float v): v(v){}
+    Number( const float v): v(v){}
     void accept( const Visitor &v) const { v.visit( *this); }
 
-    float v;
+    const float v;
 };
 

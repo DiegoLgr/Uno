@@ -22,14 +22,14 @@ struct Printer: Visitor {
 };
 
 int main ( void){
-    const Number n1 = Number{ 1 };
-    const Number n2 = Number{ 7 };
-    const Number n3 = Number{ 3 };
-    const Number n4 = Number{ 4 };
+    const Number n1 { 1 };
+    const Number n2 { 7 };
+    const Number n3 { 3 };
+    const Number n4 { 4 };
 
-    const Add a1 = Add{ n1, n2 };
-    const Add a2 = Add{ a1, n3 };
-    const Mult m = Mult{ a2, n4 };
+    const Add a1 { n1, n2 };
+    const Add a2 { a1, n3 };
+    const Mult m { a2, n4 };
 
     const Printer p;
     p.visit( m);

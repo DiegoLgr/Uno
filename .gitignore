@@ -2,3 +2,4 @@ uno
 *.o
 *.swp
 docs/latex/
+*.out

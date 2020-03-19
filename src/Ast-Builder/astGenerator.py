@@ -1,22 +1,22 @@
-ast = "Ast.cpp"
-
-terminals = {
+ast = "../Parser/Ast.cpp"
+"""
+literals = {
     'Number': (('float', 'v'),),
     'String': (('std::string', 'v'),),
     'Bool': (('bool', 'v'),),
     'Nil': tuple(tuple()),
 }
+"""
 
 nonterminals = {
-    'Equ': (('Expr', 'e1'), ('Expr', 'e2')),
-    'Comp': (('Expr', 'e1'), ('Expr', 'e2')),
-    'Add': (('Expr', 'e1'), ('Expr', 'e2')),
-    'Mult': (('Expr', 'e1'), ('Expr', 'e2')),
-    'Unary': (('Expr', 'e1'),),
+    'Unary': (('Token', 't'), ('Expr', 'e1')),
+    'Binary': (('Expr', 'e1'),('Token', 't'), ('Expr', 'e2')),
     'Group': (('Expr', 'e1'),),
+    'Literal': (('Token', 't'),),
 }
 
-expressions = { **nonterminals, **terminals}
+#expressions = { **nonterminals, **literals}
+expressions = nonterminals
 
 indent = 4 * " "
 
@@ -24,6 +24,7 @@ indent = 4 * " "
 def write_file():
     with open( ast, "w+") as f:
         f.write("#include <string>\n\n")
+        f.write("#include \"Token.h\"\n\n")
         # Base classes and typedefs
         f.write("typedef struct Expr Expr;\n")
         for expr in expressions:
@@ -36,57 +37,52 @@ def write_file():
         f.write("\n")
 
         for expr in nonterminals:
-            f.write( class_expresion( expr, False))
+            f.write( class_nonterminal( expr))
 
-        for expr in terminals:
-            f.write( class_expresion( expr, True))
+"""
+        for expr in literals:
+            f.write( class_literal( expr))
+"""
 
 
 def visitor():
     visitor = "struct Visitor {\n"
+    visitor += indent + "virtual void visit( Expr &e) = 0;\n"
     for expr in expressions:
         visitor += indent
         visitor += "virtual void visit( const {0} &e) = 0;\n".format( expr)
     visitor += "};\n\n"
     return visitor
 
-def class_expresion( expr, is_terminal):
-    """ Example of a non terminal and a terminal expresions.
-    struct Mult: Expr{
-        Mult( Expr &e1, Expr &e2):
-            e1(e1),
-            e2(e2)
-        {}
+def class_literal( expr):
+    declaration = "struct {0}: public Expr ".format(expr) + "{\n"
 
-        void accept( Visitor &v) const { v.visit( *this); }
+    # Constructor
+    constructor = ""
+    if expressions[expr]:
+        constructor += indent + "{0}( const {0} {1}):".format(
+            expressions[expr][0][0], expressions[expr][0][1])
+        constructor += "\n"
+        constructor += 2*indent + "{0}({0})\n".format( expressions[expr][0][1])
+        constructor += indent + "{}\n\n"
 
-        const Expr &e1;
-        const Expr &e2;
-    };
+    # Accept function
+    accept = indent + "void accept( Visitor &v) const { v.visit( *this); }\n\n"
 
-    struct Number: Expr {
-        Number( float v): v(v){}
+    # Class members
+    member = ""
+    if expressions[expr]:
+        member += indent + "const {0} {1};\n".format( expressions[expr][0][0], expressions[expr][0][1])
 
-        void accept( Visitor &v){ v.visit( *this); }
+    return  declaration + constructor + accept + member + "};\n\n"
 
-        float v;
-    };
-
-    """
+def class_nonterminal( expr):
     declaration = "struct {0}: public Expr ".format(expr) + "{\n"
 
     # Constructor
     constructor = indent + "{0}( ".format(expr)
-    if is_terminal:
-        if expressions[expr]:
-            for member in expressions[expr]:
-                constructor += "const {0} {1}, ".format( member[0], member[1])
-        else:
-             constructor += "  " # If expr doesn't have members, it doesn't
-                                 # get in, so it doesnt get the 2 extra char.
-    else:
-        for member in expressions[expr]:
-            constructor += "const {0} &{1}, ".format( member[0], member[1])
+    for member in expressions[expr]:
+        constructor += "const {0} &{1}, ".format( member[0], member[1])
     constructor = constructor[:-2] + "):" # Remove 2 extra char: ', '.
     for member in expressions[expr]:
         constructor += "\n"
@@ -99,14 +95,9 @@ def class_expresion( expr, is_terminal):
 
     # Class members
     members = ""
-    if is_terminal:
-        for member in expressions[expr]:
-           members += indent + "const {0} {1};\n".format( member[0], member[1])
-    else:
-        for member in expressions[expr]:
-           members += indent + "const {0}& {1};\n".format( member[0], member[1])
+    for member in expressions[expr]:
+       members += indent + "const {0}& {1};\n".format( member[0], member[1])
     return  declaration + constructor + accept + members + "};\n\n"
-
 
 
 if __name__ == '__main__':

@@ -13,11 +13,19 @@ struct Printer: Visitor {
         s.append( std::to_string( n.v));
     }
 
-    void visit( const Add &a) {
+    void visit( const  &e) {
         s.append(" (");
-        visit( a.e1);
+        visit( e.e1);
         s.append(" + ");
-        visit( a.e2);
+        visit( e.e2);
+        s.append(" )");
+    }
+
+    void visit( const Add &e) {
+        s.append(" (");
+        visit( e.e1);
+        s.append(" + ");
+        visit( e.e2);
         s.append(" )");
     }
 

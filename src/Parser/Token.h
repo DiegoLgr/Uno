@@ -37,7 +37,7 @@ class Token{
      */
     public:
         Token( int t, std::string lex, int lin);
-        std::string toString( void);
+        std::string toString( void) const;
         int getType( void);
     private:
         int type;

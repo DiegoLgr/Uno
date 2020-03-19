@@ -11,6 +11,6 @@ int Token::getType( void){
     return type;
 }
 
-std::string Token::toString( void) {
-    return std::to_string( type) + " " + lexeme;
+std::string Token::toString( void) const {
+    return lexeme;
 }

@@ -1,68 +1,52 @@
 #include <string>
+#include <iostream>
+#include <memory>
 
 #include "Token.h"
 
-typedef struct Expr Expr;
-typedef struct Unary Unary;
-typedef struct Binary Binary;
-typedef struct Group Group;
-typedef struct Literal Literal;
+typedef struct Node Node;
+struct Node {
+    const Token token;
+    Node* child1;
+    Node* child2;
 
-struct Visitor {
-    virtual void visit( Expr &e) = 0;
-    virtual void visit( const Unary &e) = 0;
-    virtual void visit( const Binary &e) = 0;
-    virtual void visit( const Group &e) = 0;
-    virtual void visit( const Literal &e) = 0;
+    std::string toString();
 };
 
-struct Expr {
- virtual void accept( Visitor &v) const = 0;
- };
+std::string Node::toString(){
+    std::string s =" (";
+    if (child1) s = s + child1->toString();
+    if (token.lexeme != "")  s = s + " " + token.lexeme;
+    if (child2) s = s + " " + child2->toString();
+    return s + ")";
+}
 
-struct Unary: public Expr {
-    Unary( const Token &t, const Expr &e1):
-        t(t),
-        e1(e1)
-    {}
+Node* f( Token t, Node* c1 = 0, Node* c2 = 0){
+    return new Node{ t, c1, c2 };
+}
 
-    void accept( Visitor &v) const { v.visit( *this); }
+void cleanStack (void) {
+    int list[200] = {0};
+    for (auto i:list) std::cout << i;
+    std::cout << std::endl;
+}
 
-    const Token& t;
-    const Expr& e1;
-};
+Node* g(){
+    Token t1 { TokenType::NUMBER, "1", 1 };
+    Token t2 { TokenType::NUMBER, "2", 1 };
+    Token t3 { TokenType::PLUS, "+", 1 };
 
-struct Binary: public Expr {
-    Binary( const Expr &e1, const Token &t, const Expr &e2):
-        e1(e1),
-        t(t),
-        e2(e2)
-    {}
+    cleanStack();
+    Node *ast1 = f(t1);
+    cleanStack();
+    Node *ast2 = f(t2);
+    cleanStack();
 
-    void accept( Visitor &v) const { v.visit( *this); }
+    return f( t3, ast1, ast2);
+}
+int main( void){
+    Node *ast = g();
+    std::cout << ast->toString() << "\n";
 
-    const Expr& e1;
-    const Token& t;
-    const Expr& e2;
-};
-
-struct Group: public Expr {
-    Group( const Expr &e1):
-        e1(e1)
-    {}
-
-    void accept( Visitor &v) const { v.visit( *this); }
-
-    const Expr& e1;
-};
-
-struct Literal: public Expr {
-    Literal( const Token &t):
-        t(t)
-    {}
-
-    void accept( Visitor &v) const { v.visit( *this); }
-
-    const Token& t;
-};
-
+    return 0;
+}

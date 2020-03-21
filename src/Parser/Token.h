@@ -3,7 +3,7 @@
 
 #include <string>
 
-typedef enum TokenType {
+enum class TokenType {
     // Single-character tokens.
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
@@ -22,9 +22,8 @@ typedef enum TokenType {
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
     COMMENT, WHITE, EOFF, ERROR
-}TokenType;
-
-class Token{
+};
+struct Token{
     /*
      * Bundle of all the information corresponding to a lexeme.
      *
@@ -35,12 +34,7 @@ class Token{
      *      lexeme:  A meaningfull secuence of one or more characters such that
      *               it is imposible to find in it a substring with meaning.
      */
-    public:
-        Token( int t, std::string lex, int lin);
-        std::string toString( void) const;
-        int getType( void);
-    private:
-        int type;
+        TokenType type;
         std::string lexeme;
         int line; //<The line in the source file in wich the token has been found.
 };

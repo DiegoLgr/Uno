@@ -6,28 +6,10 @@
 #include "Ast.h"
 
 
-Node* f( Token t, Node* c1 = 0, Node* c2 = 0){
-    return new Node{ t, c1, c2 };
-}
-
 void cleanStack (void) {
     int vector[200] = {0};
     for (auto i:vector) std::cout << i;
     std::cout << std::endl;
-}
-
-Node* g(){
-    Token t1 { TokenType::NUMBER, "1", 1 };
-    Token t2 { TokenType::NUMBER, "2", 1 };
-    Token t3 { TokenType::PLUS, "+", 1 };
-
-    cleanStack();
-    Node *ast1 = f(t1);
-    cleanStack();
-    Node *ast2 = f(t2);
-    cleanStack();
-
-    return f( t3, ast1, ast2);
 }
 
 std::vector <Token> scan( void){
@@ -40,21 +22,92 @@ std::vector <Token> scan( void){
     return l;
 }
 
-Node* parse( std::vector<Token> tokens, int start, int end, TokenType operation){
-    for (int i = start; i < end; ++i){
-        if (tokens[i].type == operation){
-            Node* child1 = parse( tokens, start, i, TokenType::STAR);
-            Node* child2 = parse( tokens, i, end, TokenType::PLUS);
-            return new Node{ tokens[i], child1, child2 };
+class Parser {
+    public:
+        Parser( const std::vector<Token>& tokens):
+            tokens( tokens)
+        {}
+
+        Parser* parse(){ parse( 0, tokens.end(), TokenType::EQUALITY)};
+
+        Node* getAst();
+
+    private:
+        const std::vector<Token>& tokens;
+        Node* ast;
+
+        Node* parse( int start, int end, TokenType operation);
+};
+
+Node* Parser::getAst( void){
+    return ast;
+}
+
+Parser* Parser::parse(){
+    TokenType operation = PLUS;
+    ast = parse( 0, tokens.end(), operation);
+    return this;
+};
+
+Node* Parser::parse( int start, int end, ExpressionType expression){
+    while (expression != ExpressionType::NONE){
+        //i is where the token is.
+        if (int i = findToken( start, end, expression) != -1){
+            return new Node{ sub_vector, i}; //sub_vector = vector start->end;
+        }else{
+            expression++;
         }
     }
     return nullptr;
 }
 
-int main( void){
-    //Node *ast = g();
-    //std::cout << ast->toString() << "\n";
-    std::vector <Token> l = scan();
+Node constructor{
+    const auto expression_left = nextExpressionLeft( expression);
+    Node* child_left = parse( tokens, start, i, expresion_left);
+    const auto expression_right = nextExpressionRight( expression);
+    Node* child2_right = parse( tokens, i, end, expression_right);
+    return new Node{ tokens[i], child1, child2 };
+}
 
+find{
+        for (int i = start; i < end; ++i){
+    if (match( tokens[i].type, expression)){
+    }
+}
+
+ExpressionType Parser::nextExpressionLeft( ExpressionType expression){
+    if (expression == EQUALITY){
+        return EQUALITY;
+    }else if (expression == COMPARISON){
+        return ADDITION;
+    }else if (expression == ADDITION){
+        return ADDITION;
+    }else if (expression == MULTIPLICATION){
+        return MULTYPLICATION;
+    }else (expression == UNARY){
+        return NONE;
+    }
+}
+
+ExpressionType Parser::nextExpressionRight( ExpressionType operation){
+    if (expression == EQUALITY){
+        return COMPARISON;
+    }else if (expression == COMPARISON){
+        return ADDITION;
+    }else if (expression == ADDITION){
+        return MULTIPLICATION;
+    }else if (expression == MULTIPLICATION){
+        return UNARY;
+    }else if (expression == UNARY){
+        return UNARY;
+    }else{
+         NONE;
+    }
+}
+
+int main( void){
+    std::vector <Token> tokens = scan();
+    Parser parser{ tokens};
+    Node* ast = parser.parse().getAst();
     return 0;
 }

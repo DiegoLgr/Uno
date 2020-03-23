@@ -22,51 +22,65 @@ std::vector <Token> scan( void){
     return l;
 }
 
-class Parser {
+
+class Subchain {
     public:
-        Parser( const std::vector<Token>& tokens):
-            tokens( tokens)
-        {}
+        const int start, end;
 
-        Parser* parse(){ parse( 0, tokens.end(), TokenType::EQUALITY)};
+        Subchain( int start, int end);
+        Subchain explicit( std::vector<Token>& tokens); //Esto con un move
+        get(i) //Este lo vamos a overlodear.
 
-        Node* getAst();
 
     private:
         const std::vector<Token>& tokens;
-        Node* ast;
-
-        Node* parse( int start, int end, TokenType operation);
 };
 
-Node* Parser::getAst( void){
-    return ast;
-}
+
+class Parser {
+    public:
+        Parser( const Subchain tokens);
+
+        Parser* parse(){ parse( 0, tokens.end(), TokenType::EQUALITY)};
+        Ast getAst();//move.
+
+    private:
+        const Subchain tokens;
+        Ast ast;
+
+         Node* parse( int start, int end, TokenType operation);//move
+};
 
 Parser* Parser::parse(){
     TokenType operation = PLUS;
-    ast = parse( 0, tokens.end(), operation);
+
+    ast = Ast{ parse( tokens, operation) };
     return this;
 };
 
-Node* Parser::parse( int start, int end, ExpressionType expression){
+Node* Parser::parse( Subchain tokens, ExpressionType expression){
     while (expression != ExpressionType::NONE){
         //i is where the token is.
-        if (int i = findToken( start, end, expression) != -1){
-            return new Node{ sub_vector, i}; //sub_vector = vector start->end;
+        if (tokens.find( expression)){
+            return new Node{ tokens }; //sub_vector = vector start->end;
         }else{
             expression++;
         }
     }
     return nullptr;
 }
+Node( Subchain tokens){
+    token = tokens.current();
 
-Node constructor{
     const auto expression_left = nextExpressionLeft( expression);
-    Node* child_left = parse( tokens, start, i, expresion_left);
+    Subchain left_chain = tokens.getLeftSubchain();
+    Node* child_left = parse( left_chain, expresion_left);
+
     const auto expression_right = nextExpressionRight( expression);
-    Node* child2_right = parse( tokens, i, end, expression_right);
-    return new Node{ tokens[i], child1, child2 };
+    Subchain right_chain = tokens.getRightSubchain()
+    Node* child_left = parse( right_chain, expresion_right);
+
+    return new Node{ tokens.current(), left_child, right_child }
 }
 
 find{
@@ -106,8 +120,8 @@ ExpressionType Parser::nextExpressionRight( ExpressionType operation){
 }
 
 int main( void){
-    std::vector <Token> tokens = scan();
+    Subchain tokens = scan();
     Parser parser{ tokens};
-    Node* ast = parser.parse().getAst();
+    Ast ast = parser.parse().getAst();
     return 0;
 }

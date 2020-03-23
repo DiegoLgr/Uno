@@ -22,7 +22,6 @@ std::vector <Token> scan( void){
     return l;
 }
 
-
 class Subchain {
     public:
         const int start, end;
@@ -36,38 +35,62 @@ class Subchain {
         const std::vector<Token>& tokens;
 };
 
+find{
+        for (int i = start; i < end; ++i){
+    if (match( tokens[i].type, expression)){
+    }
+}
+
+
 // --------- PARSER -----------
+
 class Parser {
     public:
-        Parser( const Subchain tokens);
+        Parser( const std::vector<Token> tokens);
 
-        Parser* parse(){ parse( 0, tokens.end(), TokenType::EQUALITY)};
-        Ast getAst();//move.
+        Parser* parse();
+        ExprNode getAst();//move.
 
     private:
-        const Subchain tokens;
-        Ast ast;
+        const std::vector<Token> tokens;
+        ExprNode ast;
 };
 
 Parser* Parser::parse(){
-    ast = Expression{ tokens};
+    ast = ExprNode{ tokens};
     return this;
 };
 
-class Expression{
+
+// ---------- EXPRESSION ----------
+
+class Expr{
     protected:
         equality();
         comparisson();
+        adddition();
+        multiplication();
+        unary();
 
-    private:
-        Subexpression subexpression;
-}
+        //This should be preset, but im tired now.
+        equality_set{};
+        comparison_set{};
+        addition_set{};
+        multiplication_set{};
+        unary_set{};
+        primary_set{};
 
-Expression::Expression( tokens){
-   subexpression = equality();
-}
+        Tokens tokens;
+};
 
-Subexpression Expression::equality( void){
+class Equality: Expr{};
+class Comparison: Equality{};
+class Addition: Comparison{};
+class Multiplication: Addition{};
+class Unary: Multiplication{};
+class Primary: Unary{};
+
+Equality Expr::equality( tokens){
     if (tokens.find( equality_set)){ // tokens.find -> {Substring | None}
         return new Equality{ tokens };
     }else{
@@ -75,7 +98,7 @@ Subexpression Expression::equality( void){
     }
 }
 
-Comparisson Expression::comparisson( void){
+Comparison Expr::comparisson( void){
     if (tokens.find( comparisson_set)){ // tokens.find -> {Substring | None}
         return new Comparisson{ tokens };
     }else{
@@ -83,99 +106,150 @@ Comparisson Expression::comparisson( void){
     }
 }
 
-// --------- EXPRESSIONS -----------
-class Equality: Subexpression{
+Addition Expr::addition( void){
+    if (tokens.find( addition_set)){ // tokens.find -> {Substring | None}
+        return new Addition{ tokens };
+    }else{
+        return multiplication( tokens);
+    }
+}
+
+Multiplication Expr::multiplication( void){
+    if (tokens.find( Multiplication)){ // tokens.find -> {Substring | None}
+        return new Multiplication{ tokens };
+    }else{
+        return unary( tokens);
+    }
+}
+
+Unary Expr::unary( void){
+    if (tokens.find( unary)){ // tokens.find -> {Substring | None}
+        return new Unary{ tokens };
+    }else{
+        return primary( tokens);
+    }
+}
+
+
+// ########## NODES ##########
+
+class ExprNode: Expr {
     public:
-        Equality( Subchain tokens;)
+        ExprNode( tokens);
 
     private:
-        Set<Token> equality_set{ , };
+        Equality* child;
+};
 
+ExprNode::ExprNode( tokens){
+    tokens = Subchain{ tokens };
+    child = equality( tokens);
+}
+
+class EqualityNode: Equality{
+    public:
+        EqualityNode( Subchain tokens;)
+
+    private:
         Token token;
         Equality* left_expr;
         Comparison* left_expr;
 }
 
-Equality::Equality( Subchain tokens ){
-    token = tokens.token();
-    left_expr = equality( tokens.left_subexpression);
-    rigth_expr = comparison{ tokens.right_substring() };
-}
-
-class Distinct: Equality{};
-class Equals: Equality{};
-class Comparison: Equality{};
-class Greater: Comparison {};
-class Leasser: Comparison {};
-class Addition: Comparison {};
-class Plus: Addition{};
-class Minus: Addition{};
-class Multiplication: Addition{};
-class Times{}: Multiplication;
-class Over{}: Multiplication;
-class Unary{}: Multiplication;
-class Not{}: Unary;
-class Minus{}: Unary;
-class Primary{}: Unary;
-// And the primary tipes
-// .
-// .
-// .
-
-
-
-
-
-
-Node( Subchain tokens){
+EqualityNode::EqualityNode {
+    tokens = Subchain{ tokens };
     token = tokens.current();
-
-    const auto expression_left = nextExpressionLeft( expression);
-    Subchain left_chain = tokens.getLeftSubchain();
-    Node* child_left = parse( left_chain, expresion_left);
-
-    const auto expression_right = nextExpressionRight( expression);
-    Subchain right_chain = tokens.getRightSubchain()
-    Node* child_left = parse( right_chain, expresion_right);
-
-    return new Node{ tokens.current(), left_child, right_child }
+    right_expr = equality( tokens.left());
+    right_expr = comparison( tokens.right());
 }
 
-find{
-        for (int i = start; i < end; ++i){
-    if (match( tokens[i].type, expression)){
-    }
+class ComparisonNode: Comparison {
+    public:
+        ComparisonNode( Subchain tokens)
+
+    private:
+        Token token;
+        Addition* left_expr;
+        Addition* right_expr;
+};
+
+ComparisonNode::ComparisonNode( Subchain tokens){
+    token = tokens.current();
+    right_expr = addition();
+    right_expr = addition();
 }
 
-ExpressionType Parser::nextExpressionLeft( ExpressionType expression){
-    if (expression == EQUALITY){
-        return EQUALITY;
-    }else if (expression == COMPARISON){
-        return ADDITION;
-    }else if (expression == ADDITION){
-        return ADDITION;
-    }else if (expression == MULTIPLICATION){
-        return MULTYPLICATION;
-    }else (expression == UNARY){
-        return NONE;
-    }
+class AdditionNode: Addition {
+    public:
+        AdditionNode( Subchain tokens)
+
+    private:
+        Token token;
+        Addition* left_expr;
+        Multiplication* right_expr;
+};
+
+AdditionNode::AdditionNode( Subchain tokens){
+    token = tokens.current();
+    right_expr = addition();
+    right_expr = multiplication();
 }
 
-ExpressionType Parser::nextExpressionRight( ExpressionType operation){
-    if (expression == EQUALITY){
-        return COMPARISON;
-    }else if (expression == COMPARISON){
-        return ADDITION;
-    }else if (expression == ADDITION){
-        return MULTIPLICATION;
-    }else if (expression == MULTIPLICATION){
-        return UNARY;
-    }else if (expression == UNARY){
-        return UNARY;
-    }else{
-         NONE;
-    }
+class MultiplicationNode: Multiplication {
+    public:
+        MultiplicationNode( Subchain tokens)
+
+    private:
+        Token token;
+        Multiplication* left_expr;
+        Unary* left_expr;
+};
+
+MultiplicationNode::MultiplicationNode( Subchain tokens){
+    token = tokens.current();
+    right_expr = multiplication();
+    right_expr = unary();
 }
+
+class UnaryNode: Unary {
+    public:
+        UnaryNode( Subchain tokens)
+
+    private:
+        Token token;
+        Primary* expr;
+};
+
+UnaryNode::UnaryNode( Subchain tokens){
+    token = tokens.current();
+    expr = primary();
+}
+
+class Literal: Primary {
+    public:
+        Literal( Subchain tokens)
+
+    private:
+        Token token;
+};
+
+Literal::Literal( Subchain tokens){
+    token = tokens.current();
+}
+
+class Group: Primary {
+    public:
+        Group( Subchain tokens)
+
+    private:
+        Expr expr;
+};
+
+Group::Group( Subchain tokens){
+    Expr = equality();
+}
+
+
 
 int main( void){
     Subchain tokens = scan();

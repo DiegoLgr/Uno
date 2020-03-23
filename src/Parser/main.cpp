@@ -36,7 +36,7 @@ class Subchain {
         const std::vector<Token>& tokens;
 };
 
-
+// --------- PARSER -----------
 class Parser {
     public:
         Parser( const Subchain tokens);
@@ -47,28 +47,86 @@ class Parser {
     private:
         const Subchain tokens;
         Ast ast;
-
-         Node* parse( int start, int end, TokenType operation);//move
 };
 
 Parser* Parser::parse(){
-    TokenType operation = PLUS;
-
-    ast = Ast{ parse( tokens, operation) };
+    ast = Expression{ tokens};
     return this;
 };
 
-Node* Parser::parse( Subchain tokens, ExpressionType expression){
-    while (expression != ExpressionType::NONE){
-        //i is where the token is.
-        if (tokens.find( expression)){
-            return new Node{ tokens }; //sub_vector = vector start->end;
-        }else{
-            expression++;
-        }
-    }
-    return nullptr;
+class Expression{
+    protected:
+        equality();
+        comparisson();
+
+    private:
+        Subexpression subexpression;
 }
+
+Expression::Expression( tokens){
+   subexpression = equality();
+}
+
+Subexpression Expression::equality( void){
+    if (tokens.find( equality_set)){ // tokens.find -> {Substring | None}
+        return new Equality{ tokens };
+    }else{
+        return comparisson( tokens);
+    }
+}
+
+Comparisson Expression::comparisson( void){
+    if (tokens.find( comparisson_set)){ // tokens.find -> {Substring | None}
+        return new Comparisson{ tokens };
+    }else{
+        return addition( tokens);
+    }
+}
+
+// --------- EXPRESSIONS -----------
+class Equality: Subexpression{
+    public:
+        Equality( Subchain tokens;)
+
+    private:
+        Set<Token> equality_set{ , };
+
+        Token token;
+        Equality* left_expr;
+        Comparison* left_expr;
+}
+
+Equality::Equality( Subchain tokens ){
+    token = tokens.token();
+    left_expr = equality( tokens.left_subexpression);
+    rigth_expr = comparison{ tokens.right_substring() };
+}
+
+class Distinct: Equality{};
+class Equals: Equality{};
+class Comparison: Equality{};
+class Greater: Comparison {};
+class Leasser: Comparison {};
+class Addition: Comparison {};
+class Plus: Addition{};
+class Minus: Addition{};
+class Multiplication: Addition{};
+class Times{}: Multiplication;
+class Over{}: Multiplication;
+class Unary{}: Multiplication;
+class Not{}: Unary;
+class Minus{}: Unary;
+class Primary{}: Unary;
+// And the primary tipes
+// .
+// .
+// .
+
+
+
+
+
+
 Node( Subchain tokens){
     token = tokens.current();
 

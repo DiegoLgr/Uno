@@ -64,31 +64,6 @@ Parser* Parser::parse(){
 
 // ---------- EXPRESSION ----------
 
-class Expr{
-    protected:
-        equality();
-        comparisson();
-        adddition();
-        multiplication();
-        unary();
-
-        //This should be preset, but im tired now.
-        equality_set{};
-        comparison_set{};
-        addition_set{};
-        multiplication_set{};
-        unary_set{};
-        primary_set{};
-
-        Tokens tokens;
-};
-
-class Equality: Expr{};
-class Comparison: Equality{};
-class Addition: Comparison{};
-class Multiplication: Addition{};
-class Unary: Multiplication{};
-class Primary: Unary{};
 
 Equality Expr::equality( tokens){
     if (tokens.find( equality_set)){ // tokens.find -> {Substring | None}

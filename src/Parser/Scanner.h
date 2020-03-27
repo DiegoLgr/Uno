@@ -35,7 +35,7 @@ class Scanner{
     private:
         std::string source;
         std::list<Token> tokens;
-        std::map<std::string,int> keywords; //Uno's reserved words.
+        std::map<std::string, TokenType> keywords; //Uno's reserved words.
         std::string::iterator current; //The caracter bein scanned.
         std::string::iterator start; //Start of the lexeme being scanned.
         int line; //Line number in the source of the lexeme being scanned.
@@ -56,14 +56,14 @@ class Scanner{
          *
          * @returns The COMMENT token type.
          */
-        int scanComment( void);
+        TokenType scanComment( void);
 
         /**
         * Scans a succesion of digits whit at most one '.' among them.
         *
         * @returns The NUMBER token type.
         */
-        int scanNumber( void);
+        TokenType scanNumber( void);
 
         /**
          * Scans throught an uninterrupted succesion of letters and finds it
@@ -71,6 +71,6 @@ class Scanner{
          *
          * @returns The token Type of the scanned lexeme.
          */
-        int scanWord( void);
+        TokenType scanWord( void);
 };
 #endif

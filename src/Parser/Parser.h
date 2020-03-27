@@ -2,8 +2,8 @@
 #define PARSER_H
 class Parser {
     public:
-        Parser explicit( const std::vector<Token>& tokens);
-        Ast getAst() const;
+        explicit Parser ( const std::vector<Token>& tokens);
+        AstNode getAst() const;
 
     private:
         std::vector<Token> tokens;

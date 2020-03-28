@@ -3,7 +3,7 @@
 
 #include "Token.h"
 
-#include <list>
+#include <vector>
 #include <map>
 #include <string>
 
@@ -23,7 +23,7 @@ class Scanner{
          * @returns The complete list of tokens corresponding to the source
          * string.
          */
-        std::list<Token> getTokens( void);
+        std::vector<Token> getTokens( void);
 
         /**
          * Creates a the complete list of tokens corresponding to the source
@@ -34,7 +34,7 @@ class Scanner{
 
     private:
         std::string source;
-        std::list<Token> tokens;
+        std::vector<Token> tokens;
         std::map<std::string, TokenType> keywords; //Uno's reserved words.
         std::string::iterator current; //The caracter bein scanned.
         std::string::iterator start; //Start of the lexeme being scanned.

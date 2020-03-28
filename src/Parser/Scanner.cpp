@@ -17,7 +17,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
-#include <list>
+#include <vector>
 #include <cassert>
 
 Scanner::Scanner( std::string src){
@@ -44,7 +44,7 @@ Scanner::Scanner( std::string src){
     keywords["while"] =  TokenType::WHILE;
 };
 
-std::list<Token> Scanner::getTokens( void){
+std::vector<Token> Scanner::getTokens( void){
     return tokens;
 }
 

@@ -7,8 +7,10 @@ class Parser {
 
     private:
         std::vector<Token> tokens;
-        AstNode ast;
+        std::unique_ptr<AstNode> ast;
 
         std::unique_ptr<AstNode> parse( int start, int end);
+        int find_less_priority_token( int i, int j) const;
+        int choose_lest_priority( int current_id, int next_id) const;
 };
 #endif

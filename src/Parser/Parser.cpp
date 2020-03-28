@@ -1,36 +1,40 @@
 #include <memory>
+#include <algorithm>
+#include <vector>
+
 #include "Token.h"
 #include "AstNode.h"
+#include "Parser.h"
 
 
 Parser::Parser( const std::vector<Token>& tokens): tokens{ tokens }{
-    unique_ptr<AstNode> ast = parse( 0, tokens.end());
+    ast = parse( 0, tokens.size());
 };
 
-std::unique_ptr<AstNode> parse( int start, int end){
+std::unique_ptr<AstNode> Parser::parse( int start, int end){
     if (start == end){
-        return make_unique<AstNode>( tokens[start]);
+        return std::make_unique<AstNode>( tokens[start]);
     }
     int i = find_less_priority_token( start, end);
     std::unique_ptr<AstNode> left_expr = parse( start, i);
     std::unique_ptr<AstNode> right_expr = parse( i, end);
 
-    return make_unique<AstNode>( tokens[i], left_expr, right_expr);
+    return std::make_unique<AstNode>( tokens[i], move( left_expr), move( right_expr));
 }
 
-int find_less_priority_token( int i, int end) const{
+int Parser::find_less_priority_token( int i, int end) const{
     int chosen = i++;
-    for( i; i < end; i++){
-        choose_lest_priority( chosen, i)
+    for (; i < end; i++){
+        choose_lest_priority( chosen, i);
     }
     return chosen;
 }
 
 /*
  * True if the next one has less priority or if it has the same but the
- * operation is left asociative.
+ * operation is left associative.
  */
-bool choose_lest_priority( int cuerrent_id, int next_id) const{
+int Parser::choose_lest_priority( int current_id, int next_id) const{
     Token current = tokens[current_id];
     Token next = tokens[next_id];
     if (current.type < next.type){
@@ -38,11 +42,11 @@ bool choose_lest_priority( int cuerrent_id, int next_id) const{
     }else{
 
         bool is_left_associative =
-            Token::left_associative.end()
+            left_associative.end()
                 ==
             std::find(
-                     Token::left_asociative.begin(),
-                     Token::lect_asociative.end(),
+                     left_associative.begin(),
+                     left_associative.end(),
                      current.type
             );
 

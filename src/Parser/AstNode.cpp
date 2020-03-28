@@ -7,6 +7,7 @@
 
 
 AstNode::AstNode( Token token) : token{token} {};
+AstNode::AstNode( void) : token{Token{}} {};
 
 AstNode::AstNode( Token token, std::unique_ptr<AstNode> left_child,
                   std::unique_ptr<AstNode> right_child) :

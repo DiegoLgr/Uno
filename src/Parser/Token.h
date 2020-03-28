@@ -2,6 +2,7 @@
 #define TOKEN_H
 
 #include <string>
+#include <array>
 
 enum class TokenType {
     // Single-character tokens.
@@ -38,4 +39,9 @@ struct Token{
         std::string lexeme;
         int line; //<The line in the source file in wich the token has been found.
 };
+
+std::array<TokenType, 1> left_associative{
+    TokenType::MINUS
+};
+
 #endif

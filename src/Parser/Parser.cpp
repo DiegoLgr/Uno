@@ -1,23 +1,53 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <iostream>
 
 #include "Token.h"
 #include "AstNode.h"
 #include "Parser.h"
+
+std::array<TokenType, 12> operators{
+    // Equality.
+    TokenType::EQUAL_EQUAL, TokenType::BANG_EQUAL,
+
+    // Comparisson.
+    TokenType::GREATER, TokenType::GREATER_EQUAL, TokenType::LESS, TokenType::LESS_EQUAL,
+
+    // Addition.
+    TokenType::PLUS, TokenType::MINUS,
+
+    // Multiplication.
+    TokenType::STAR, TokenType::SLASH,
+
+    // Unary.
+    TokenType::BANG,
+
+    // Literal.
+    TokenType::NUMBER
+};
+
+std::array<TokenType, 2> left_associative{
+    TokenType::MINUS, TokenType::SLASH
+};
+
 
 
 Parser::Parser( const std::vector<Token>& tokens): tokens{ tokens }{
     ast = parse( 0, tokens.size());
 };
 
+std::unique_ptr<AstNode> Parser::getAst( void){
+    return  move( ast);
+}
+
 std::unique_ptr<AstNode> Parser::parse( int start, int end){
-    if (start == end){
+    if (start == end-1){
         return std::make_unique<AstNode>( tokens[start]);
     }
     int i = find_less_priority_token( start, end);
     std::unique_ptr<AstNode> left_expr = parse( start, i);
-    std::unique_ptr<AstNode> right_expr = parse( i, end);
+    std::unique_ptr<AstNode> right_expr = parse( i+1, end);
 
     return std::make_unique<AstNode>( tokens[i], move( left_expr), move( right_expr));
 }
@@ -25,7 +55,7 @@ std::unique_ptr<AstNode> Parser::parse( int start, int end){
 int Parser::find_less_priority_token( int i, int end) const{
     int chosen = i++;
     for (; i < end; i++){
-        choose_lest_priority( chosen, i);
+        chosen = choose_lest_priority( chosen, i);
     }
     return chosen;
 }
@@ -37,23 +67,25 @@ int Parser::find_less_priority_token( int i, int end) const{
 int Parser::choose_lest_priority( int current_id, int next_id) const{
     Token current = tokens[current_id];
     Token next = tokens[next_id];
-    if (current.type < next.type){
-        return current_id;
+
+    if (find_priority( current.type) > find_priority( next.type)){
+        return next_id;
+    }else if (current.type == next.type && is_left_associative( current.type)){
+        return next_id;
     }else{
-
-        bool is_left_associative =
-            left_associative.end()
-                ==
-            std::find(
-                     left_associative.begin(),
-                     left_associative.end(),
-                     current.type
-            );
-
-        if (is_left_associative){
-            return current_id;
-        }else{
-            return next_id;
-        }
+        return current_id;
     }
 }
+
+TokenType* Parser::find_priority ( TokenType type) const{
+            auto end = operators.end();
+            auto begin = operators.begin();
+            return std::find( begin, end, type);
+}
+
+bool Parser::is_left_associative( TokenType type) const{
+            auto end = left_associative.end();
+            auto begin = left_associative.begin();
+            return end != std::find( begin, end, type);
+}
+

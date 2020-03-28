@@ -24,6 +24,7 @@ enum class TokenType {
 
     COMMENT, WHITE, EOFF, ERROR
 };
+
 struct Token{
     /*
      * Bundle of all the information corresponding to a lexeme.
@@ -38,10 +39,6 @@ struct Token{
         TokenType type;
         std::string lexeme;
         int line; //<The line in the source file in wich the token has been found.
-};
-
-std::array<TokenType, 1> left_associative{
-    TokenType::MINUS
 };
 
 #endif

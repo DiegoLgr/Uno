@@ -13,6 +13,7 @@ class Parser {
         int find_less_priority_token( int i, int j) const;
         int choose_lest_priority( int current_id, int next_id) const;
         TokenType* find_priority (TokenType type) const;
+        bool is_operator( TokenType type) const;
         bool is_left_associative (TokenType type) const;
 };
 #endif

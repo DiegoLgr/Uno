@@ -1,4 +1,4 @@
-all: main.o Parser.o AstNode.o
+all: main.o Scanner.o Parser.o AstNode.o
 	clang++ main.o Scanner.o Parser.o AstNode.o
 
 main.o: main.cpp

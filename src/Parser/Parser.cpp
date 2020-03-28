@@ -7,7 +7,7 @@
 #include "AstNode.h"
 #include "Parser.h"
 
-std::array<TokenType, 12> operators{
+std::array<TokenType, 11> operators{
     // Equality.
     TokenType::EQUAL_EQUAL, TokenType::BANG_EQUAL,
 
@@ -21,10 +21,7 @@ std::array<TokenType, 12> operators{
     TokenType::STAR, TokenType::SLASH,
 
     // Unary.
-    TokenType::BANG,
-
-    // Literal.
-    TokenType::NUMBER
+    TokenType::BANG
 };
 
 std::array<TokenType, 2> left_associative{
@@ -42,12 +39,17 @@ std::unique_ptr<AstNode> Parser::getAst( void){
 }
 
 std::unique_ptr<AstNode> Parser::parse( int start, int end){
-    if (start == end-1){
+    if (start >= end-1){
         return std::make_unique<AstNode>( tokens[start]);
     }
     int i = find_less_priority_token( start, end);
-    std::unique_ptr<AstNode> left_expr = parse( start, i);
-    std::unique_ptr<AstNode> right_expr = parse( i+1, end);
+    std::unique_ptr<AstNode> left_expr;
+    std::unique_ptr<AstNode> right_expr;
+
+    if (is_operator( tokens[i].type)){
+        left_expr = parse( start, i);
+        right_expr = parse( i+1, end);
+    }
 
     return std::make_unique<AstNode>( tokens[i], move( left_expr), move( right_expr));
 }
@@ -80,7 +82,15 @@ int Parser::choose_lest_priority( int current_id, int next_id) const{
 TokenType* Parser::find_priority ( TokenType type) const{
             auto end = operators.end();
             auto begin = operators.begin();
-            return std::find( begin, end, type);
+            auto it = std::find( begin, end, type);
+            if ( it == end) return end-1;
+            return it;
+}
+
+bool Parser::is_operator ( TokenType type) const{
+            auto end = operators.end();
+            auto begin = operators.begin();
+            return end != std::find( begin, end, type);
 }
 
 bool Parser::is_left_associative( TokenType type) const{

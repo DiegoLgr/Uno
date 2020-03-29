@@ -3,8 +3,8 @@
 #include <vector>
 #include <iostream>
 
-#include "Token.h"
-#include "AstNode.h"
+#include "../Token.h"
+#include "../Ast/Ast.h"
 #include "Parser.h"
 
 std::array<TokenType, 11> operators{
@@ -34,24 +34,24 @@ Parser::Parser( const std::vector<Token>& tokens): tokens{ tokens }{
     ast = parse( 0, tokens.size());
 };
 
-std::unique_ptr<AstNode> Parser::getAst( void){
+std::unique_ptr<Ast> Parser::getAst( void){
     return  move( ast);
 }
 
-std::unique_ptr<AstNode> Parser::parse( int start, int end){
+std::unique_ptr<Ast> Parser::parse( int start, int end){
     if (start >= end-1){
-        return std::make_unique<AstNode>( tokens[start]);
+        return std::make_unique<Ast>( tokens[start]);
     }
     int i = find_less_priority_token( start, end);
-    std::unique_ptr<AstNode> left_expr;
-    std::unique_ptr<AstNode> right_expr;
+    std::unique_ptr<Ast> left_expr;
+    std::unique_ptr<Ast> right_expr;
 
     if (is_operator( tokens[i].type)){
         left_expr = parse( start, i);
         right_expr = parse( i+1, end);
     }
 
-    return std::make_unique<AstNode>( tokens[i], move( left_expr), move( right_expr));
+    return std::make_unique<Ast>( tokens[i], move( left_expr), move( right_expr));
 }
 
 int Parser::find_less_priority_token( int i, int end) const{

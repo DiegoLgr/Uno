@@ -1,7 +1,7 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include "Token.h"
+#include "../Token.h"
 
 #include <vector>
 #include <map>

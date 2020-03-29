@@ -3,7 +3,7 @@
  *
  * @brief Entry point for uno cli.
  */
-#include "Uno.h"
+#include "Interpreter/Interpreter.h"
 
 #include <iostream>
 #include <fstream>
@@ -37,19 +37,19 @@ void informError( void){
 }
 
 void runFromFile( std::string file_path){
-    Uno uno;
+    Interpreter interpreter;
     std::ifstream file( file_path);
     std::string source((std::istreambuf_iterator<char>(file)),
                         std::istreambuf_iterator<char>());
-    uno.run( source);
+    interpreter.run( source);
 }
 
 void runRPL( void){
-    Uno uno;
+    Interpreter interpreter;
     std::string source;
     while( true){
         std::cout << "Uno ~> ";
         std::getline( std::cin, source);
-        uno.run( source);
+        interpreter.run( source);
     }
 }

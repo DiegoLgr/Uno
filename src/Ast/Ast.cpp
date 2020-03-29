@@ -2,21 +2,21 @@
 #include <iostream>
 #include <memory>
 
-#include "Token.h"
-#include "AstNode.h"
+#include "../Token.h"
+#include "Ast.h"
 
 
-AstNode::AstNode( void) : token{ Token{} } {};
-AstNode::AstNode( Token token) : token{ token } {};
+Ast::Ast( void) : token{ Token{} } {};
+Ast::Ast( Token token) : token{ token } {};
 
-AstNode::AstNode( Token token, std::unique_ptr<AstNode> left_child,
-                  std::unique_ptr<AstNode> right_child) :
+Ast::Ast( Token token, std::unique_ptr<Ast> left_child,
+                  std::unique_ptr<Ast> right_child) :
     token{token},
     left_child{ move(left_child) },
     right_child{ move(right_child) }
 {};
 
-std::string AstNode::toString( void) const{
+std::string Ast::toString( void) const{
     std::string s =" (";
     if (left_child) s = s + left_child->toString();
     if (token.lexeme != "")  s = s + " " + token.lexeme;

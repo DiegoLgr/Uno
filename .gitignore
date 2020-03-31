@@ -1,4 +1,5 @@
 uno
+*.out
 *.o
 *.swp
 docs/latex/

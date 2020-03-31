@@ -20,7 +20,7 @@ void Interpreter::run( std::string source){
     Parser parser{ tokens};
     auto ast = parser.getExpr();
 
-    std::cout << ast->toString() << std::endl;
+    std::cout << ast->eval() << std::endl;
 }
 
 void Interpreter::error( int line, std::string mssg){

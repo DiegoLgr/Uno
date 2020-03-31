@@ -8,6 +8,7 @@ class Expr {
         Expr( Token token, std::unique_ptr<Expr> left_child,
                             std::unique_ptr<Expr> right_child);
         std::string toString( void) const;
+        int eval( void) const;
 
     private:
         Token token;

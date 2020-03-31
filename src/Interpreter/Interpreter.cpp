@@ -4,7 +4,7 @@
 
 #include "Interpreter.h"
 #include "../Token.h"
-#include "../Ast/Ast.h"
+#include "../Expr/Expr.h"
 #include "../Scanner/Scanner.h"
 #include "../Parser/Parser.h"
 
@@ -18,7 +18,7 @@ void Interpreter::run( std::string source){
     auto tokens = scanner.getTokens();
 
     Parser parser{ tokens};
-    auto ast = parser.getAst();
+    auto ast = parser.getExpr();
 
     std::cout << ast->toString() << std::endl;
 }

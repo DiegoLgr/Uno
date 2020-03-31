@@ -15,7 +15,6 @@ class Interpreter {
 
     private:
         bool has_error;
-
         void error( int line, std::string mssg);
 };
 #endif

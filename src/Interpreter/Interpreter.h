@@ -6,8 +6,15 @@
 #ifndef UNO_H
 #define UNO_H
 
-#include <stdio.h>
 #include <iostream>
+#include <memory>
+#include <vector>
+
+#include "../Expr/Expr.h"
+#include "../Scanner/Scanner.h"
+#include "../Parser/Parser.h"
+
+
 class Interpreter {
     public:
         Interpreter( void);

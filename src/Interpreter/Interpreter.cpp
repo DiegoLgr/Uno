@@ -1,12 +1,5 @@
-#include <iostream>
-#include <memory>
-#include <vector>
-
 #include "Interpreter.h"
-#include "../Token.h"
-#include "../Expr/Expr.h"
-#include "../Scanner/Scanner.h"
-#include "../Parser/Parser.h"
+
 
 Interpreter::Interpreter ( void){
     has_error = false;
@@ -14,7 +7,6 @@ Interpreter::Interpreter ( void){
 
 void Interpreter::run( std::string source){
     Scanner scanner{ source};
-    scanner.scanTokens();
     auto tokens = scanner.getTokens();
 
     Parser parser{ tokens};

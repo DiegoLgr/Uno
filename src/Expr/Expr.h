@@ -1,6 +1,11 @@
 #ifndef EXPR_H
 #define EXPR_H
 
+#include <string>
+#include <iostream>
+#include <memory>
+
+#include "../Token.h"
 class Expr {
     public:
         Expr( void);

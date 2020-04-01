@@ -1,7 +1,7 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include "../Token.h"
+#include "../Uno.h"
 
 #include <vector>
 #include <map>
@@ -12,30 +12,26 @@ class Scanner{
      * Turns a string of source code into a list of tokens.
      *
      * To scann a source code You must initialize the scanner by caling its
-     * constructor with a string containing the raw source and call scanTokens
+     * constructor with a string containing the raw source.
      * To get the list of tokens use getTokens.
+     * Creates a the complete list of tokens corresponding to the source
+     * string.
      */
 
     public:
         explicit Scanner( std::string src);
-
         /**
          * @returns The complete list of tokens corresponding to the source
          * string.
          */
         std::vector<Token> getTokens( void);
 
-        /**
-         * Creates a the complete list of tokens corresponding to the source
-         * string.
-         */
-        void scanTokens( void);
 
 
     private:
+        void scanTokens( void);
         std::string source;
         std::vector<Token> tokens;
-        std::map<std::string, TokenType> keywords; //Uno's reserved words.
         std::string::iterator current; //The caracter bein scanned.
         std::string::iterator start; //Start of the lexeme being scanned.
         int line; //Line number in the source of the lexeme being scanned.
@@ -49,28 +45,11 @@ class Scanner{
          */
         Token nextToken( void);
 
-        bool followedBy( char c);
-
-        /**
-         * Scans until the end of the line.
-         *
-         * @returns The COMMENT token type.
-         */
-        TokenType scanComment( void);
-
         /**
         * Scans a succesion of digits whit at most one '.' among them.
         *
         * @returns The NUMBER token type.
         */
         TokenType scanNumber( void);
-
-        /**
-         * Scans throught an uninterrupted succesion of letters and finds it
-         * token type.
-         *
-         * @returns The token Type of the scanned lexeme.
-         */
-        TokenType scanWord( void);
 };
 #endif

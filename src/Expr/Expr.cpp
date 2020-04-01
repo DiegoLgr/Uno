@@ -20,10 +20,9 @@ std::string Expr::toString( void) const{
 }
 
 int Expr::eval( void) const{
-    if (token.type == TokenType::NUMBER)
-        return std::stoi( token.lexeme);
-
     switch (token.type){
+        case TokenType::NUMBER:
+            return std::stoi( token.lexeme);
         case TokenType::PLUS:
             return left_child->eval() + right_child->eval();
         case TokenType::MINUS:
@@ -32,6 +31,9 @@ int Expr::eval( void) const{
             return left_child->eval() * right_child->eval();
         case TokenType::SLASH:
             return left_child->eval() / right_child->eval();
+        case TokenType::EOFF: //fallthrough
+        case TokenType::ERROR:
+            throw 20;
     }
 }
 

@@ -41,7 +41,6 @@ void Scanner::scanTokens( void){
             tokens.push_back( t);
         }
     }
-    tokens.push_back( Token {TokenType::EOFF, "end", line});
 }
 
 Token Scanner::nextToken( void){

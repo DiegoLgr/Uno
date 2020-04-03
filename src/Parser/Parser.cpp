@@ -8,20 +8,11 @@
 #include "Parser.h"
 
 std::array<TokenType, 11> operators{
-    // Equality.
-    TokenType::EQUAL_EQUAL, TokenType::BANG_EQUAL,
-
-    // Comparisson.
-    TokenType::GREATER, TokenType::GREATER_EQUAL, TokenType::LESS, TokenType::LESS_EQUAL,
-
     // Addition.
     TokenType::PLUS, TokenType::MINUS,
 
     // Multiplication.
     TokenType::STAR, TokenType::SLASH,
-
-    // Unary.
-    TokenType::BANG
 };
 
 std::array<TokenType, 2> left_associative{

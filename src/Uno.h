@@ -5,7 +5,7 @@
 #include <array>
 
 enum class TokenType {
-    MINUS, PLUS, SLASH, STAR, NUMBER, ERROR, EOFF
+    MINUS, PLUS, SLASH, STAR, NUMBER, WHITE, ERROR
 };
 
 struct Token{

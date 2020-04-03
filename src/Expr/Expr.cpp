@@ -31,9 +31,7 @@ int Expr::eval( void) const{
             return left_child->eval() * right_child->eval();
         case TokenType::SLASH:
             return left_child->eval() / right_child->eval();
-        case TokenType::EOFF: //fallthrough
-        case TokenType::ERROR:
-            throw 20;
+        case TokenType::ERROR: throw "Error while eval";
     }
 }
 

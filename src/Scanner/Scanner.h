@@ -1,8 +1,9 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include "../Uno.h"
+#include "Token.h"
 
+#include <memory>
 #include <vector>
 #include <map>
 #include <string>
@@ -24,18 +25,14 @@ class Scanner{
          * @returns The complete list of tokens corresponding to the source
          * string.
          */
-        std::vector<Token> getTokens( void);
-
-
+        std::vector<std::unique_ptr<Token>> getTokens( void);
 
     private:
         void scanTokens( void);
         std::string source;
-        std::vector<Token> tokens;
+        std::vector<std::unique_ptr<Token>> tokens;
         std::string::iterator current; //The caracter bein scanned.
         std::string::iterator start; //Start of the lexeme being scanned.
-        int line; //Line number in the source of the lexeme being scanned.
-        bool error; //Wrong character (or in wrong position) found.
 
         /**
          * Scans characters until has read a full lexeme and turns it into a
@@ -43,13 +40,18 @@ class Scanner{
          *
          * @returns A token corresponding to the next lexeme.
          */
-        Token nextToken( void);
+        std::unique_ptr<Token> nextToken( void);
 
+        bool is_white( char c) const;
+
+        std::unique_ptr<Token> match_operator( char op);
         /**
         * Scans a succesion of digits whit at most one '.' among them.
         *
         * @returns The NUMBER token type.
         */
-        TokenType scanNumber( void);
+        std::unique_ptr<Token> scanNumber( void);
+
+        bool is_operator( char c) const;
 };
 #endif

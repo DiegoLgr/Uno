@@ -12,74 +12,91 @@
  */
 #include "Scanner.h"
 
-
 #include <string>
 #include <fstream>
 #include <streambuf>
 #include <vector>
 #include <cassert>
 
-
 Scanner::Scanner( std::string src){
     source = src;
-    line = 0;
     current = source.begin();
     start = current;
-    error = false;
     scanTokens();
 };
 
-std::vector<Token> Scanner::getTokens( void){
-    return tokens;
+std::vector<std::unique_ptr<Token>> Scanner::getTokens( void){
+    return move( tokens);
 }
 
 void Scanner::scanTokens( void){
-    while (!(current >= source.end())){
-        start = current;
-        Token t = nextToken();
-        if (t.type != TokenType::WHITE){
-            tokens.push_back( t);
-        }
+    do {
+        tokens.push_back( nextToken());
+    } while (!(current >= source.end()));
+}
+
+std::unique_ptr<Token> Scanner::nextToken( void){
+    while (is_white( *current++)){ continue; }
+
+    start = --current;
+    if (isdigit( *current)){
+        return scanNumber();
+    }else if (is_operator( *current)){
+        return match_operator( *current);
+    }else{
+        throw std::runtime_error("Unknown symbol");
     }
 }
 
-Token Scanner::nextToken( void){
-    TokenType token_id;
-    char c = *current++;
-    switch (c){
-        //Whitespace.
-        case '\n': line++; //Fallthrough.
-        case ' ': //Fallthrough.
-        case '\r': //Fallthrough.
-        case '\t': token_id = TokenType::WHITE; break;
-        //Operators
-        case '-': token_id = TokenType::MINUS; break;
-        case '+': token_id = TokenType::PLUS; break;
-        case '*': token_id = TokenType::STAR; break;
-        case '/': token_id = TokenType::SLASH; break;
-        default:
-            if (isdigit( c)) token_id = scanNumber();
-            else token_id = TokenType::ERROR; error = true;
+bool Scanner::is_white( char c) const {
+    switch(c){
+        case ' ': // Fallthrogh.
+        case '\t': return true;
+        default: return false;
     }
-    std::string lexeme = std::string( start, current);
-    return Token{ token_id, lexeme, line };
 }
 
-TokenType Scanner::scanNumber( void){
+std::unique_ptr<Token> Scanner::match_operator ( char op){
+    // This token is consumed.
+    Token* t;
+    switch (op){
+        case '+': t = new Plus; break;
+        case '-': t = new Minus; break;
+        case '*': t = new Star; break;
+        case '/': t = new Slash; break;
+        default: throw std::runtime_error{"op not op"};
+    }
+    current++;
+    return move( std::unique_ptr<Token>{t});
+}
+
+std::unique_ptr<Token> Scanner::scanNumber( void){
     /*
      * Real numbers and integer are treated in the same way.
      * A number always starts with a digit.
      * 0.980 -> right
      * .980 -> wrong
      */
-    assert( isdigit( *(current-1))); //The first digit has already been consumed
-
-    while (isdigit( *current++)) continue;
-    if (*current++ == '.' && isdigit( *current++)){
-        while (isdigit( *current++)) continue;
-    }else {
-        --current;
-        --current; //Reset current to '.' if it is not followed by a number.
+    assert( !isdigit( *(current-1)));
+    assert( isdigit( *current)); //This has to be the first digit.
+    while (isdigit( *++current)) continue;
+    if (*current == '.' && isdigit( *(current+1) )){
+        current++; //Skip the '.'
+        while (isdigit( *++current)) continue;
     }
-    return TokenType::NUMBER;
-};
+    assert( isdigit( *(current-1))); //Te character before this is a digit.
+    assert( !isdigit( (*current))); //But this is not.
+
+    Token* t = new Number( std::stof( std::string{start, current}));
+    return std::unique_ptr<Token>{t};
+}
+
+bool Scanner::is_operator( char c) const{
+    switch (c){
+        case '+': // fallthrow;
+        case '-': // fallthrow;
+        case '*': // fallthrow;
+        case '/': return true;
+        default: return false;
+    }
+}

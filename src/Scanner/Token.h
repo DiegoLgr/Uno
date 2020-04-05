@@ -24,23 +24,25 @@ struct Token {
 };
 
 struct Plus: public Token {
-    void accept( TokenVisitor* v) const { v->visit( *this); }
+    void accept( TokenVisitor* v) const override { v->visit( *this); }
 };
 
 struct Minus: public Token {
-    void accept( TokenVisitor* v) const { v->visit( *this); }
+    void accept( TokenVisitor* v) const override { v->visit( *this); }
 };
 
 struct Star: public Token {
-    void accept( TokenVisitor* v) const { v->visit( *this); }
+    void accept( TokenVisitor* v) const override { v->visit( *this); }
 };
 
 struct Slash: public Token {
-    void accept( TokenVisitor* v) const { v->visit( *this); }
+    void accept( TokenVisitor* v) const override { v->visit( *this); }
 };
 
 struct Number: public Token {
     explicit Number( float val) : value{val}{}
-    void accept( TokenVisitor* v) const { v->visit( *this); }
+
+    void accept( TokenVisitor* v) const override { v->visit( *this); }
+
     float value;
 };

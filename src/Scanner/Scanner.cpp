@@ -48,28 +48,6 @@ std::unique_ptr<Token> Scanner::nextToken( void){
     }
 }
 
-bool Scanner::is_white( char c) const {
-    switch(c){
-        case ' ': // Fallthrogh.
-        case '\t': return true;
-        default: return false;
-    }
-}
-
-std::unique_ptr<Token> Scanner::match_operator ( char op){
-    // This token is consumed.
-    Token* t;
-    switch (op){
-        case '+': t = new Plus; break;
-        case '-': t = new Minus; break;
-        case '*': t = new Star; break;
-        case '/': t = new Slash; break;
-        default: throw std::runtime_error{"op not op"};
-    }
-    current++;
-    return move( std::unique_ptr<Token>{t});
-}
-
 std::unique_ptr<Token> Scanner::scanNumber( void){
     /*
      * Real numbers and integer are treated in the same way.
@@ -87,8 +65,30 @@ std::unique_ptr<Token> Scanner::scanNumber( void){
     assert( isdigit( *(current-1))); //Te character before this is a digit.
     assert( !isdigit( (*current))); //But this is not.
 
-    Token* t = new Number( std::stof( std::string{start, current}));
-    return std::unique_ptr<Token>{t};
+    auto value = std::stof( std::string{start, current});
+    return std::make_unique<Number>( value);
+}
+
+std::unique_ptr<Token> Scanner::match_operator ( char op){
+    // This token is consumed.
+    std::unique_ptr<Token> t;
+    switch (op){
+        case '+': t = std::make_unique<Plus>(); break;
+        case '-': t = std::make_unique<Minus>(); break;
+        case '*': t = std::make_unique<Star>(); break;
+        case '/': t = std::make_unique<Slash>(); break;
+        default: throw std::runtime_error{"op not op"};
+    }
+    current++;
+    return move( t);
+}
+
+bool Scanner::is_white( char c) const {
+    switch(c){
+        case ' ': // Fallthrogh.
+        case '\t': return true;
+        default: return false;
+    }
 }
 
 bool Scanner::is_operator( char c) const{
